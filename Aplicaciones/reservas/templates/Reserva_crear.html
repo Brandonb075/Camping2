@@ -1,0 +1,100 @@
+{% extends "./plantilla.html" %}
+{% block content %}
+<form action="{% url 'AgregarReserva' %}" id="frm_nueva_reserva" method="post">
+    <h3>Agregar Nueva Reserva:</h3>
+    {% csrf_token %}
+    <label for="" class="form-label"><b>Fecha de inicio: </b></label>
+    <input type="date" class="form-control" name="txt_fech_ini" id="txt_fech_ini">
+    <br>
+    <label for="" class="form-label"><b>Fecha de Fin:</b></label>
+    <input type="date" class="form-control" name="txt_fech_fin" id="txt_fech_fin">
+    <br>
+    <label for="" class="form-label"><b>Campista:</b></label>
+    <input type="hidden" class="form-control" name="txt_campista" value="{{ campista.id }}">
+    <p>{{ campista.identificacion }} - {{ campista.nombre }}</p>
+    <br>
+    <label for="" class="form-label"><b>Alojamiento:</b></label>
+    <select class="form-select" name="txt_alojamiento" id="txt_alojamiento">
+        <option value="">Seleccione Su Alojamiento</option>
+        <option value="Tienda">Tienda</option>
+        <option value="Cabaña">Cabaña</option>
+        <option value="Caravana">Caravana</option>
+    </select>
+    <br>
+    <label for="" class="form-label"><b>Número de Personas:</b></label>
+    <input type="number" class="form-control" name="txt_npersonas" id="txt_npersonas">
+    <br>
+    <label for="" class="form-label"><b>Estado:</b></label>
+    <select class="form-select" name="txt_estado" id="txt_estado">
+        <option value="">Estado</option>
+        <option value="Confirmada">Confirmada</option>
+        <option value="Pendiente">Pendiente</option>
+        <option value="Cancelada">Cancelada</option>
+    </select>
+    <br>
+    <label for="" class="form-label"><b>Observaciones:</b></label>
+    <textarea class="form-control" name="txt_observaciones" id="txt_observaciones"></textarea>
+    <br>
+    <button type="submit" class="btn btn-success">Guardar</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="reset" class="btn btn-danger">Cancelar</button>
+</form>
+<script>
+    $('#frm_nueva_reserva').validate({
+        rules: {
+            'txt_fech_ini': {
+                required: true,
+                minDate: true
+            },
+            'txt_fech_fin': {
+                required: true,
+                maxDateFin: true 
+            },
+            'txt_campista': {
+                required: true
+            },
+            'txt_alojamiento': {
+                required: true
+            },
+            'txt_npersonas': {
+                required: true,
+                numbersonly: true,
+                max: 12 
+            },
+            'txt_estado': {
+                required: true
+            },
+            'txt_observaciones': {
+                required: true
+            }
+        },
+        messages: {
+            'txt_fech_ini': {
+                required: 'Ingrese la fecha de inicio, por favor.',
+                minDate: 'La fecha de inicio debe ser al menos 3 días después de hoy.'
+            },
+            'txt_fech_fin': {
+                required: 'Ingrese la fecha de fin, por favor.',
+                maxDateFin: 'Fecha Invalida debe ser maximo 7 dias despues de la fecha de inicio de la reserva'
+            },
+            'txt_campista': {
+                required: 'Debe seleccionar un campista.'
+            },
+            'txt_alojamiento': {
+                required: 'Seleccione un tipo de alojamiento.'
+            },
+            'txt_npersonas': {
+                required: 'Ingrese el número de personas.',
+                numbersonly: 'El número de personas debe ser un valor numérico.',
+                max: 'El número de personas no puede ser mayor a 12.'
+            },
+            'txt_estado': {
+                required: 'Seleccione el estado de la reserva.'
+            },
+            'txt_observaciones': {
+                required: 'Ingrese las observaciones, por favor.'
+            }
+        }
+    });
+</script>
+{% endblock %}

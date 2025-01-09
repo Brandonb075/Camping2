@@ -1,0 +1,46 @@
+{% extends "./plantilla.html" %}
+{%block content%}
+<h3>Listado Reservas</h3>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Fecha de Inicio</th>
+            <th>Fecha de Final</th>
+            <th>Campista</th>
+            <th>Alojamiento</th>
+            <th>Numero de Personas</th>
+            <th>Estado</th>
+            <th>Observaciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--Ingresar los datos-->
+        {%for reserva in reserva%}
+        <tr>
+            <td>{{reserva.id}}</td>
+            <td>{{reserva.fecha_inicio}}</td>
+            <td>{{reserva.fecha_fin}}</td>
+            <td>{{reserva.campista.nombre}}</td>
+            <td>{{reserva.alojamiento}}</td>
+            <td>{{reserva.numero_personas}}</td>
+            <td>{{reserva.Estado}}</td>
+            <td>{{reserva.observaciones}}</td>
+            <td>
+                <a href="{% url 'EditarReserva' reserva.id %}" 
+                class="btn btn-success">
+                    Editar
+                </a>
+                <button class="btn btn-danger btn-sm mx-1" onclick="showConfirmModal('{% url 'EliminarReserva' reserva.id %}')">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+        {%empty%}
+        <tr>
+            <td colspan="7" style="text-align:center">no hay campistas registrados</td>
+        </tr>
+        {%endfor%}
+    </tbody> 
+</table>
+{%endblock%}

@@ -1,0 +1,73 @@
+{% extends "./plantilla.html" %}
+{%block content%}
+<form method="post" id="frm_editar_campista" >
+    <h3>Editar Campista</h3>
+    {% csrf_token %}
+    <label for="txt_identificacion" class="form-label" >Identificación: </label>
+    <input type="text" class="form-control" name="txt_identificacion" value="{{campista.identificacion}}">
+    <label for="txt_nombre" class="form-label" >Nombre Completo:</label>
+    <input type="text" class="form-control" name="txt_nombre" value="{{campista.nombre}}">
+    <label for="txt_correo" class="form-label" >Correo:</label>
+    <input type="text" class="form-control" name="txt_correo" value="{{campista.correo}}">
+    <label for="txt_telefono" class="form-label" >Telefono:</label>
+    <input type="text" class="form-control" name="txt_telefono" value="{{campista.telefono}}">
+    <label for="txt_direccion" class="form-label" >Direccion:</label>
+    <textarea name=txt_direccion class="form-control">{{campista.direccion}}</textarea>
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'ListadoCampista' %}'">Cancelar</button>
+</form>
+<script>
+    $('#frm_editar_campista').validate({
+        rules: {
+            'txt_identificacion': {
+                required: true,
+                minlength: 10,
+                maxlength: 10,
+                cedula1: true
+            },
+            'txt_nombre': {
+                required: true,
+                letras: true
+            },
+            'txt_correo': {
+                required: true,
+                email: true
+            },
+            'txt_telefono': {
+                required: true,
+                minlength: 10,
+                maxlength: 10,
+                numbersonly: true 
+            },
+            'txt_direccion': {
+                required: true
+            }
+        },
+        messages: {
+            'txt_identificacion': {
+                required: 'Ingrese la cédula, por favor.',
+                minlength: 'Debe tener al menos 10 dígitos.',
+                maxlength: 'No debe tener más de 10 dígitos.',
+                cedula1: 'La cédula no es correcta.'
+            },
+            'txt_nombre': {
+                required: 'Ingrese el nombre, por favor.'
+            },
+            'txt_correo': {
+                required: 'Ingrese el correo, por favor.',
+                email: 'Ingrese un correo electrónico válido.'
+            },
+            'txt_telefono': {
+                required: 'Ingrese el teléfono, por favor.',
+                minlength: 'Debe tener al menos 10 dígitos.',
+                maxlength: 'No debe tener más de 10 dígitos.',
+                numbersonly: 'El teléfono debe contener solo números.'
+            },
+            'txt_direccion': {
+                required: 'Ingrese la dirección, por favor.'
+            }
+        }
+    });
+</script>
+{%endblock%}
